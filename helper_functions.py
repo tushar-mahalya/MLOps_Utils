@@ -3,6 +3,29 @@ import subprocess
 import logging
 
 class DVCManager:
+    """
+    A class to manage Git repositories and DVC projects.
+
+    This class provides methods to set Git configuration, clone repositories, initialize DVC, 
+    add data to DVC, and commit and push changes to the repository. It also provides a method 
+    to automate the entire process of initializing a repository with DVC, adding data, and 
+    pushing changes.
+
+    Attributes:
+        user_name (str): The username for the Git/DagsHub accounts.
+        email (str): The email for the Git/DagsHub account.
+        token (str): The token for the Git/DagsHub accounts.
+
+    Methods:
+        run_command(command: str) -> str: Run a shell command and return its output.
+        set_git_config(): Set global Git configuration.
+        clone_repo(repo: str): Clone a repository to local runtime.
+        initialize_dvc(repo: str): Initialize DVC and set up remote storage.
+        commit_and_push_changes(repo: str, message: str): Add all changes to Git, commit them, and push to the initialized repository.
+        add_data_to_dvc(data_path: str, output_path: str): Add a directory to DVC and push the DVC-tracked files to the remote storage.
+        initialize_repo_with_dvc(repo: str, data_path: str, output_path: str): Initialize a repository with DVC, add data, and push changes.
+    """
+    
     def __init__(self, user_name: str, email: str, token: str):
         self.user_name = user_name
         self.email = email
@@ -73,19 +96,19 @@ class DVCManager:
         Initialize a repository with DVC, add data, and push changes.
         """
         self.set_git_config()
-        print("Git configuration set successfully.")
+        print("Git configuration set successfully")
     
         self.clone_repo(repo)
-        print(f"Repository {repo} cloned successfully.")
+        print(f"Repository {repo} cloned successfully")
     
         self.initialize_dvc(repo)
-        print("DVC initialized and remote storage set up successfully.")
+        print("DVC initialized and remote storage set up successfully")
     
         self.commit_and_push_changes(repo, "Initialize DVC")
         print("Changes committed and pushed to the repository with message: Initialize DVC")
     
         self.add_data_to_dvc(data_path, output_path)
-        print(f"Data from {data_path} added to DVC and pushed to remote storage.")
+        print(f"Data from {data_path} added to DVC and pushed to remote storage")
     
         self.commit_and_push_changes(repo, "Added Versioned Data")
         print("Changes committed and pushed to the repository with message: Added Versioned Data")
