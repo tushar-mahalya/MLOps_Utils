@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages, get_dependencies
+from setuptools import setup, find_packages
 
 setup(
     name='My Personal MLOps Utility Package',
@@ -8,5 +8,5 @@ setup(
     author='Tushar Sharma',
     author_email='tusharmahalya.com',
     url='https://github.com/tushar-mahalya/MLOps_Utils',
-    install_requires=get_dependencies(),
+    install_requires=[],
 )
