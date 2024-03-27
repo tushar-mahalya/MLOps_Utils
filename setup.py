@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='my_mlops_utils',
+    name='MLOps_Utils',
     version='0.1',
     packages=find_packages(),
     description='A package for managing Machine Learning Operations for my projects.',
