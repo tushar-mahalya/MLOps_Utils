@@ -33,7 +33,7 @@ pip install git+https://github.com/tushar-mahalya/MLOps_Utils.git
 ## Usage
 ```python
 # Import the RepoManager class from the MLOps_utils.helper_functions module
-from MLOps_Utils.helper_functions import DVCManager
+from MLOps_Utils.helper_functions import RepoManager
 
 # Initialize DagsHub Credentials
 USER_NAME = # DagsHub UserName
