@@ -1,1 +1,1 @@
-from .helper_functions import DVCManager
+from .helper_functions import RepoManager
