@@ -2,7 +2,7 @@ import os
 import subprocess
 import logging
 
-class DVCManager:
+class RepoManager:
     """
     A class to manage Git repositories and DVC projects.
 
@@ -112,7 +112,3 @@ class DVCManager:
     
         self.commit_and_push_changes(repo, "Added Versioned Data")
         print("Changes committed and pushed to the repository with message: Added Versioned Data")
-
-# Usage:
-# manager = GitDVCManager(USER_NAME, EMAIL, TOKEN)
-# manager.initialize_repo_with_dvc(REPO, DATA_PATH, OUTPUT_PATH)
