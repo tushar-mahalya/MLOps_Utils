@@ -96,19 +96,19 @@ class RepoManager:
         Initialize a repository with DVC, add data, and push changes.
         """
         self.set_git_config()
-        print("Git configuration set successfully")
+        print(">>> Git configuration set successfully")
     
         self.clone_repo(repo)
-        print(f"Repository {repo} cloned successfully")
+        print(f">>> Repository {repo} cloned successfully")
     
         self.initialize_dvc(repo)
-        print("DVC initialized and remote storage set up successfully")
+        print(">>> DVC initialized and remote storage set up successfully")
     
         self.commit_and_push_changes(repo, "Initialize DVC")
-        print("Changes committed and pushed to the repository with message: Initialize DVC")
+        print(">>> Changes committed and pushed to the repository with message: \"Initialize DVC\"")
     
         self.add_data_to_dvc(data_path, output_path)
-        print(f"Data from {data_path} added to DVC and pushed to remote storage")
+        print(f">>> Data from {data_path} added to DVC and pushed to remote storage")
     
         self.commit_and_push_changes(repo, "Added Versioned Data")
-        print("Changes committed and pushed to the repository with message: Added Versioned Data")
+        print(">>> Changes committed and pushed to the repository with message: \"Added Versioned Data\"")
