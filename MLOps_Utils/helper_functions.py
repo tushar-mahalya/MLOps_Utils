@@ -133,5 +133,5 @@ class RepoManager:
         os.environ['MLFLOW_TRACKING_PASSWORD'] = self.token
         MLFLOW_TRACKING_URI = f"https://dagshub.com/{self.user_name}/{repo}.mlflow"
         mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-        print('>>> MLFlow Experiment Tracking Initialized\n\tExperiment Tracking URI : {MLFLOW_TRACKING_URI}')
+        print(f'>>> MLFlow Experiment Tracking Initialized\n\tExperiment Tracking URI : {MLFLOW_TRACKING_URI}')
 
