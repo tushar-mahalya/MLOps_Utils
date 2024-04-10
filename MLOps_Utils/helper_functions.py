@@ -1,6 +1,7 @@
 import os
 import subprocess
 import logging
+import mlflow
 
 class RepoManager:
     """
@@ -30,6 +31,7 @@ class RepoManager:
         self.user_name = user_name
         self.email = email
         self.token = token
+        self.is_git_config = False
         logging.basicConfig(level=logging.INFO)
 
     def run_command(self, command: str) -> str:
@@ -49,6 +51,7 @@ class RepoManager:
         """
         self.run_command(f'git config --global user.email {self.email}')
         self.run_command(f'git config --global user.name {self.user_name}')
+        self.is_git_config = True
         logging.info("Git configuration set.")
 
     def clone_repo(self, repo: str):
@@ -95,20 +98,40 @@ class RepoManager:
         """
         Initialize a repository with DVC, add data, and push changes.
         """
-        self.set_git_config()
-        print(">>> Git configuration set successfully")
+        if not self.is_git_config:
+            self.set_git_config()
+            print(">>> Git configuration set successfully")
+
+        if not os.path.exists(repo):
+            self.clone_repo(repo)
+            print(f">>> Repository {repo} cloned successfully")
+        else:
+            os.chdir(repo)
+            print(f">>> Repository {repo} already exists")
     
-        self.clone_repo(repo)
-        print(f">>> Repository {repo} cloned successfully")
+        if not os.path.exists('.dvc'):
+            self.initialize_dvc(repo)
+            print(">>> DVC initialized and remote storage set up successfully")
+            self.commit_and_push_changes(repo, "Initialize DVC")
+            print(">>> Changes committed and pushed to the repository with message: \"Initialize DVC\"")
+        else:
+            print(">>> DVC already initialized")
+
+        if not os.path.exists(output_path):
+            self.add_data_to_dvc(data_path, output_path)
+            print(f">>> Data from {data_path} added to DVC and pushed to remote storage")
+            self.commit_and_push_changes(repo, "Added Versioned Data")
+            print(">>> Changes committed and pushed to the repository with message: \"Added Versioned Data\"")
+        else:
+            print(f">>> Data from {data_path} already added to Remote with DVC")    
     
-        self.initialize_dvc(repo)
-        print(">>> DVC initialized and remote storage set up successfully")
-    
-        self.commit_and_push_changes(repo, "Initialize DVC")
-        print(">>> Changes committed and pushed to the repository with message: \"Initialize DVC\"")
-    
-        self.add_data_to_dvc(data_path, output_path)
-        print(f">>> Data from {data_path} added to DVC and pushed to remote storage")
-    
-        self.commit_and_push_changes(repo, "Added Versioned Data")
-        print(">>> Changes committed and pushed to the repository with message: \"Added Versioned Data\"")
+    def initialize_tracking(self, repo: str):
+        if not self.is_git_config:
+            self.set_git_config()
+            print(">>> Git configuration set successfully")
+        os.environ['MLFLOW_TRACKING_USERNAME'] = self.user_name
+        os.environ['MLFLOW_TRACKING_PASSWORD'] = self.token
+        MLFLOW_TRACKING_URI = f"https://dagshub.com/{self.user_name}/{repo}.mlflow"
+        mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+        print('>>> MLFlow Experiment Tracking Initialized\n\tExperiment Tracking URI : {MLFLOW_TRACKING_URI}')
+

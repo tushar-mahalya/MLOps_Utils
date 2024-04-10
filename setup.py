@@ -8,5 +8,5 @@ setup(
     author='Tushar Sharma',
     author_email='tusharmahalya.com',
     url='https://github.com/tushar-mahalya/MLOps_Utils',
-    install_requires=[],
+    install_requires=['mlflow'],
 )
