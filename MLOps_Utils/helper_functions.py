@@ -135,3 +135,18 @@ class RepoManager:
         mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
         print(f'>>> MLFlow Experiment Tracking Initialized\n\tExperiment Tracking URI : {MLFLOW_TRACKING_URI}')
 
+    def retrive_experiment_id(self, experiment_name):
+    """
+    Ensure the existence of an experiment with the given name. If it doesn't exist, create it.
+    
+    Args:
+        experiment_name (str): The name of the experiment.
+    """
+    experiment_id = None
+    if experiment := mlflow.get_experiment_by_name(experiment_name):
+        experiment_id = experiment.experiment_id
+        print(f"Experiment '{experiment_name}' already exists with ID {experiment_id}.")
+    else:
+        experiment_id = mlflow.create_experiment(experiment_name)
+        print(f"Experiment '{experiment_name}' created with ID {experiment_id}.")
+
